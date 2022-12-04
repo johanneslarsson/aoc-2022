@@ -9,8 +9,7 @@ import (
 
 func getValue(match []rune) int {
 	sum := 0
-	for i := range match {
-		m := match[i]
+	for _, m := range match {
 		sub := 0
 		if int(m) > 96 {
 			sub = 96
@@ -24,14 +23,13 @@ func getValue(match []rune) int {
 
 func getPartOne(rows [][]rune) int {
 	match := make([]rune, 0)
-	for i := range rows {
-		row := rows[i]
+	for _, row := range rows {
 		rowLen := len(row)
 		first := row[:rowLen/2]
 		second := row[rowLen/2:]
-		for j := range first {
-			if strings.ContainsRune(string(second), first[j]) {
-				match = append(match, first[j])
+		for _, firstRune := range first {
+			if strings.ContainsRune(string(second), firstRune) {
+				match = append(match, firstRune)
 				break
 			}
 		}
@@ -41,20 +39,15 @@ func getPartOne(rows [][]rune) int {
 
 func getPartTwo(rows [][]rune) int {
 	match := make([]rune, 0)
-	i := 0
-	for range rows {
-		row := rows[i]
-		next := rows[i+1]
-		nextNext := rows[i+2]
-		for j := range row {
-			if strings.ContainsRune(string(next), row[j]) && strings.ContainsRune(string(nextNext), row[j]) {
-				match = append(match, row[j])
+	for i := 0; i < len(rows); i += 3 {
+		first := rows[i]
+		second := rows[i+1]
+		third := rows[i+2]
+		for _, firstRune := range first {
+			if strings.ContainsRune(string(second), firstRune) && strings.ContainsRune(string(third), firstRune) {
+				match = append(match, firstRune)
 				break
 			}
-		}
-		i += 3
-		if i == len(rows) {
-			break
 		}
 	}
 	return getValue(match)

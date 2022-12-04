@@ -18,8 +18,8 @@ func getSum(cals []int) int {
 
 func getPartOne(numbers [][]int) int {
 	max := 0
-	for elf := range numbers {
-		sum := getSum(numbers[elf])
+	for _, number := range numbers {
+		sum := getSum(number)
 		if sum > max {
 			max = sum
 		}
@@ -29,8 +29,8 @@ func getPartOne(numbers [][]int) int {
 
 func getPartTwo(numbers [][]int) int {
 	aggregated := make([]int, 0)
-	for elf := range numbers {
-		sum := getSum(numbers[elf])
+	for _, number := range numbers {
+		sum := getSum(number)
 		aggregated = append(aggregated, sum)
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(aggregated)))

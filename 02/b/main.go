@@ -42,8 +42,7 @@ func getPartOne(moves []Move) int {
 
 func getPartTwo(moves []Move) int {
 	sum := 0
-	for i := range moves {
-		m := moves[i]
+	for _, m := range moves {
 		// adjust
 		if m.Player2 == 1 {
 			m.Player2 = m.Player1

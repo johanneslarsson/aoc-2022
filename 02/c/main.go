@@ -36,8 +36,7 @@ func calcSum(m Move) int {
 
 func getPartOne(moves []Move) int {
 	sum := 0
-	for i := range moves {
-		m := moves[i]
+	for _, m := range moves {
 		sum += calcSum(m)
 	}
 	return sum
@@ -45,8 +44,7 @@ func getPartOne(moves []Move) int {
 
 func getPartTwo(moves []Move) int {
 	sum := 0
-	for i := range moves {
-		m := moves[i]
+	for _, m := range moves {
 		// adjust
 		if m.Player2 == 0 { // prev
 			m.Player2 = (m.Player1 + ArraySize - 1) % ArraySize

@@ -48,10 +48,10 @@ func getPartTwo(moves []Move) int {
 	for i := range moves {
 		m := moves[i]
 		// adjust
-		if m.Player2 == 1 {
-			m.Player2 = m.Player1
-		} else if m.Player2 == 0 { // prev
+		if m.Player2 == 0 { // prev
 			m.Player2 = (m.Player1 + ArraySize - 1) % ArraySize
+		} else if m.Player2 == 1 {
+			m.Player2 = m.Player1
 		} else if m.Player2 == 2 { // next
 			m.Player2 = (m.Player1 + 1) % ArraySize
 		}

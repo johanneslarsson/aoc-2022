@@ -7,8 +7,7 @@ import (
 	"strings"
 )
 
-func getValue(match []rune) int {
-	sum := 0
+func getValue(match []rune) (sum int) {
 	for _, m := range match {
 		sub := 0
 		if int(m) > 96 {

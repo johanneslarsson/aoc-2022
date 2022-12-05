@@ -13,8 +13,7 @@ type Instruction struct {
 	To    int
 }
 
-func getResult(crateStacks [][]rune) string {
-	result := ""
+func getResult(crateStacks [][]rune) (result string) {
 	for _, stack := range crateStacks {
 		result += string(stack[len(stack)-1:])
 	}

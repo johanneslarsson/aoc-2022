@@ -8,16 +8,14 @@ import (
 	"strconv"
 )
 
-func getSum(cals []int) int {
-	sum := 0
-	for cal := range cals {
-		sum += cals[cal]
+func getSum(cals []int) (sum int) {
+	for _, cal := range cals {
+		sum += cal
 	}
 	return sum
 }
 
-func getPartOne(numbers [][]int) int {
-	max := 0
+func getPartOne(numbers [][]int) (max int) {
 	for _, number := range numbers {
 		sum := getSum(number)
 		if sum > max {

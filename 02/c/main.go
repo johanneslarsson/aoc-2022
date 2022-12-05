@@ -22,8 +22,7 @@ type Move struct {
 	Player2 int
 }
 
-func calcSum(m Move) int {
-	sum := 0
+func calcSum(m Move) (sum int) {
 	diff := (m.Player2 - m.Player1 + ArraySize) % ArraySize
 	if diff == 0 {
 		sum += 3
@@ -34,16 +33,14 @@ func calcSum(m Move) int {
 	return sum
 }
 
-func getPartOne(moves []Move) int {
-	sum := 0
+func getPartOne(moves []Move) (sum int) {
 	for _, m := range moves {
 		sum += calcSum(m)
 	}
 	return sum
 }
 
-func getPartTwo(moves []Move) int {
-	sum := 0
+func getPartTwo(moves []Move) (sum int) {
 	for _, m := range moves {
 		// adjust
 		if m.Player2 == 0 { // prev

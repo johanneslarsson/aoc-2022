@@ -16,8 +16,7 @@ type Pair struct {
 	Second Section
 }
 
-func getPartOne(pairs []Pair) int {
-	count := 0
+func getPartOne(pairs []Pair) (count int) {
 	for _, pair := range pairs {
 		if (pair.First.Start <= pair.Second.Start && pair.Second.End <= pair.First.End) ||
 			(pair.Second.Start <= pair.First.Start && pair.First.End <= pair.Second.End) {
@@ -27,8 +26,7 @@ func getPartOne(pairs []Pair) int {
 	return count
 }
 
-func getPartTwo(pairs []Pair) int {
-	count := 0
+func getPartTwo(pairs []Pair) (count int) {
 	for _, pair := range pairs {
 		if (pair.First.Start <= pair.Second.Start && pair.First.End >= pair.Second.Start) ||
 			(pair.Second.Start <= pair.First.Start && pair.Second.End >= pair.First.Start) {
@@ -38,8 +36,7 @@ func getPartTwo(pairs []Pair) int {
 	return count
 }
 
-func getPartTwoUsingArray(pairs []Pair) int {
-	count := 0
+func getPartTwoUsingArray(pairs []Pair) (count int) {
 	for _, pair := range pairs {
 		numbers := make([]bool, 100)
 		for j := pair.First.Start; j <= pair.First.End; j++ {
@@ -55,8 +52,7 @@ func getPartTwoUsingArray(pairs []Pair) int {
 	return count
 }
 
-func getPartTwoUsingSet(pairs []Pair) int {
-	count := 0
+func getPartTwoUsingSet(pairs []Pair) (count int) {
 	for _, pair := range pairs {
 		numbers := make(map[int]bool, getMax(pair.First.End, pair.Second.End))
 		for j := pair.First.Start; j <= pair.First.End; j++ {

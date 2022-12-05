@@ -4,96 +4,91 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
-type Section struct {
-	Start int
-	End   int
+type Instruction struct {
+	Count int
+	From  int
+	To    int
 }
 
-type Pair struct {
-	First  Section
-	Second Section
-}
-
-func getPartOne(pairs []Pair) int {
-	count := 0
-	for _, pair := range pairs {
-		if (pair.First.Start <= pair.Second.Start && pair.Second.End <= pair.First.End) ||
-			(pair.Second.Start <= pair.First.Start && pair.First.End <= pair.Second.End) {
-			count++
-		}
+func getResult(crates [][]rune) string {
+	result := ""
+	for _, crate := range crates {
+		result += string(crate[len(crate)-1:])
 	}
-	return count
+	return result
 }
 
-func getPartTwo(pairs []Pair) int {
-	count := 0
-	for _, pair := range pairs {
-		if (pair.First.Start <= pair.Second.Start && pair.First.End >= pair.Second.Start) ||
-			(pair.Second.Start <= pair.First.Start && pair.Second.End >= pair.First.Start) {
-			count++
-		}
+func reverse(r []rune) {
+	for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {
+		r[i], r[j] = r[j], r[i]
 	}
-	return count
 }
 
-func getPartTwoUsingArray(pairs []Pair) int {
-	count := 0
-	for _, pair := range pairs {
-		numbers := make([]bool, 100)
-		for j := pair.First.Start; j <= pair.First.End; j++ {
-			numbers[j] = true
+func moveCrates(crates [][]rune, instructions []Instruction, preservePickOrder bool) {
+	for _, inst := range instructions {
+		fromCrate := crates[inst.From]
+		index := len(fromCrate) - inst.Count
+		lastElements := fromCrate[index:]     // get last
+		crates[inst.From] = fromCrate[:index] // remove last
+		if preservePickOrder {
+			reverse(lastElements)
 		}
-		for j := pair.Second.Start; j <= pair.Second.End; j++ {
-			if numbers[j] {
-				count++
-				break
-			}
-		}
+		crates[inst.To] = append(crates[inst.To], lastElements...)
 	}
-	return count
 }
 
-func getPartTwoUsingSet(pairs []Pair) int {
-	count := 0
-	for _, pair := range pairs {
-		numbers := make(map[int]bool, getMax(pair.First.End, pair.Second.End))
-		for j := pair.First.Start; j <= pair.First.End; j++ {
-			numbers[j] = true
-		}
-		for j := pair.Second.Start; j <= pair.Second.End; j++ {
-			if _, ok := numbers[j]; ok {
-				count++
-				break
-			}
-		}
-	}
-	return count
+func getPartOne(crates [][]rune, instructions []Instruction) string {
+	moveCrates(crates, instructions, true)
+
+	result := getResult(crates)
+	return result
 }
 
-func getMax(a int, b int) int {
-	if a > b {
-		return a + 1
-	}
-	return b + 1
+func getPartTwo(crates [][]rune, instructions []Instruction) string {
+	moveCrates(crates, instructions, false)
+
+	result := getResult(crates)
+	return result
 }
 
-func getRows(filename string) []Pair {
+func getRows(filename string) ([][]rune, []Instruction) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
-	rows := make([]Pair, 0)
+	crates := make([][]rune, 0)
+	instructions := make([]Instruction, 0)
 	for scanner.Scan() {
-		pair := Pair{}
-		fmt.Sscanf(scanner.Text(), "%d-%d,%d-%d",
-			&pair.First.Start, &pair.First.End, &pair.Second.Start, &pair.Second.End)
-		rows = append(rows, pair)
+		row := scanner.Text()
+		if strings.Contains(row, "[") {
+			for i := 1; i < len(row); i += 4 {
+				j := (i - 1) / 4
+				if j+1 > len(crates) {
+					crates = append(crates, make([]rune, 0))
+				}
+				if string(row[i]) != " " {
+					crates[j] = append(crates[j], int32(row[i]))
+				}
+			}
+		} else if strings.Contains(row, "move") {
+			var inst Instruction
+			fmt.Sscanf(row, "move %d from %d to %d",
+				&inst.Count, &inst.From, &inst.To)
+			inst.From -= 1
+			inst.To -= 1
+			instructions = append(instructions, inst)
+		}
 	}
-	return rows
+	// Reverse the crates
+	for _, r := range crates {
+		reverse(r)
+	}
+	return crates, instructions
 }
 
 func main() {

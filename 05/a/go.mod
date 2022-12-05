@@ -1,3 +1,3 @@
-module aoc2022/04/a
+module aoc2022/05/a
 
 go 1.19

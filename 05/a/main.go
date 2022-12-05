@@ -13,10 +13,10 @@ type Instruction struct {
 	To    int
 }
 
-func getResult(crates [][]rune) string {
+func getResult(crateStacks [][]rune) string {
 	result := ""
-	for _, crate := range crates {
-		result += string(crate[len(crate)-1:])
+	for _, stack := range crateStacks {
+		result += string(stack[len(stack)-1:])
 	}
 	return result
 }
@@ -27,30 +27,28 @@ func reverse(r []rune) {
 	}
 }
 
-func moveCrates(crates [][]rune, instructions []Instruction, preservePickOrder bool) {
+func moveCrates(crateStacks [][]rune, instructions []Instruction, preservePickOneByOneOrder bool) {
 	for _, inst := range instructions {
-		fromCrate := crates[inst.From]
-		index := len(fromCrate) - inst.Count
-		lastElements := fromCrate[index:]     // get last
-		crates[inst.From] = fromCrate[:index] // remove last
-		if preservePickOrder {
-			reverse(lastElements)
+		fromStack := crateStacks[inst.From]
+		stackIndex := len(fromStack) - inst.Count
+		lastCrates := fromStack[stackIndex:]            // get last
+		crateStacks[inst.From] = fromStack[:stackIndex] // remove last
+		if preservePickOneByOneOrder {
+			reverse(lastCrates)
 		}
-		crates[inst.To] = append(crates[inst.To], lastElements...)
+		crateStacks[inst.To] = append(crateStacks[inst.To], lastCrates...)
 	}
 }
 
-func getPartOne(crates [][]rune, instructions []Instruction) string {
-	moveCrates(crates, instructions, true)
-
-	result := getResult(crates)
+func getPartOne(crateStacks [][]rune, instructions []Instruction) string {
+	moveCrates(crateStacks, instructions, true)
+	result := getResult(crateStacks)
 	return result
 }
 
-func getPartTwo(crates [][]rune, instructions []Instruction) string {
-	moveCrates(crates, instructions, false)
-
-	result := getResult(crates)
+func getPartTwo(crateStacks [][]rune, instructions []Instruction) string {
+	moveCrates(crateStacks, instructions, false)
+	result := getResult(crateStacks)
 	return result
 }
 
@@ -61,18 +59,18 @@ func getRows(filename string) ([][]rune, []Instruction) {
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
-	crates := make([][]rune, 0)
+	crateStacks := make([][]rune, 0)
 	instructions := make([]Instruction, 0)
 	for scanner.Scan() {
 		row := scanner.Text()
 		if strings.Contains(row, "[") {
 			for i := 1; i < len(row); i += 4 {
 				j := (i - 1) / 4
-				if j+1 > len(crates) {
-					crates = append(crates, make([]rune, 0))
+				if j+1 > len(crateStacks) {
+					crateStacks = append(crateStacks, make([]rune, 0))
 				}
 				if string(row[i]) != " " {
-					crates[j] = append(crates[j], int32(row[i]))
+					crateStacks[j] = append(crateStacks[j], int32(row[i]))
 				}
 			}
 		} else if strings.Contains(row, "move") {
@@ -84,11 +82,11 @@ func getRows(filename string) ([][]rune, []Instruction) {
 			instructions = append(instructions, inst)
 		}
 	}
-	// Reverse the crates
-	for _, r := range crates {
-		reverse(r)
+	// Reverse the crateStack
+	for _, crateStack := range crateStacks {
+		reverse(crateStack)
 	}
-	return crates, instructions
+	return crateStacks, instructions
 }
 
 func main() {

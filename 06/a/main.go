@@ -72,7 +72,20 @@ func getRows(filename string) []rune {
 	return rows[0]
 }
 
+func printIf(size int) {
+	for i := 0; i < size; i++ {
+		result := ""
+		for j := i + 1; j < size; j++ {
+			result += fmt.Sprintf("r%d != r%d && ", i, j)
+		}
+		fmt.Println(result)
+	}
+
+}
+
 func main() {
+	//printIf(4)
+	//printIf(14)
 	fmt.Println("Part one:", getPartOne(getRows("../input.txt")))
 	fmt.Println("Part two:", getPartTwo(getRows("../input.txt")))
 }

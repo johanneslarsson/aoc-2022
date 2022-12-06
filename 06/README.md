@@ -43,3 +43,14 @@ BenchmarkPartTwo
 BenchmarkPartTwo-12    	   26151	     46604 ns/op
 PASS
 ```
+
+e) ([set with delete instead make new](e/main.go))
+```
+pkg: aoc2022/06/e
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkPartOne
+BenchmarkPartOne-12    	   16126	     74089 ns/op
+BenchmarkPartTwo
+BenchmarkPartTwo-12    	    2486	    479418 ns/op
+PASS
+```

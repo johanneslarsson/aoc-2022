@@ -34,10 +34,3 @@ pkg: aoc2022/06/e
 BenchmarkPartOne-12    	   16126	     74089 ns/op
 BenchmarkPartTwo-12    	    2486	    479418 ns/op
 ```
-
-f) ([set with reassign keys instead of make new](f/main.go))
-```
-pkg: aoc2022/06/f
-BenchmarkPartOne-12    	    1592	    641736 ns/op
-BenchmarkPartTwo-12    	     589	   1904948 ns/op
-```

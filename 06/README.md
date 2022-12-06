@@ -1,6 +1,6 @@
 # Day 6
 
-a) ifs
+a) ([ifs](a/main.go))
 ```
 pkg: aoc2022/06/a
 cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
@@ -11,7 +11,7 @@ BenchmarkPartTwo-12    	   49843	     23438 ns/op
 PASS
 ```
 
-b) set
+b) ([set](b/main.go))
 ```
 pkg: aoc2022/06/b
 cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
@@ -22,7 +22,7 @@ BenchmarkPartTwo-12    	    1747	    659222 ns/op
 PASS
 ```
 
-c) array
+c) ([array](c/main.go))
 ```
 pkg: aoc2022/06/c
 cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
@@ -33,7 +33,7 @@ BenchmarkPartTwo-12    	   23130	     51808 ns/op
 PASS
 ```
 
-d) for loops
+d) ([for loops](d/main.go))
 ```
 pkg: aoc2022/06/d
 cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz

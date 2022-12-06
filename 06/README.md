@@ -22,8 +22,6 @@ BenchmarkPartTwo-12    	    1747	    659222 ns/op
 PASS
 ```
 
-
-
 c) array
 ```
 pkg: aoc2022/06/c
@@ -34,7 +32,6 @@ BenchmarkPartTwo
 BenchmarkPartTwo-12    	   23130	     51808 ns/op
 PASS
 ```
-
 
 d) for loops
 ```

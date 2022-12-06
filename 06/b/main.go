@@ -7,20 +7,17 @@ import (
 )
 
 func getFirstMarkerPosition(row []rune, size int) int {
-	for i := 0; i < len(row)-size-1; i++ {
+	for i := 0; i < len(row)-size; i++ {
 		set := make(map[int32]bool, size)
-		set[row[i]] = true
-		duplicateFound := false
-		for j := i + 1; j < i+size; j++ {
-			if _, ok := set[row[j]]; ok {
-				duplicateFound = true
+		for j := 0; j < i+size; j++ {
+			if _, ok := set[row[i+j]]; ok {
 				break
 			} else {
-				set[row[j]] = true
+				set[row[i+j]] = true
 			}
-		}
-		if !duplicateFound {
-			return i + size
+			if j == size-1 {
+				return i + size
+			}
 		}
 	}
 	return 0

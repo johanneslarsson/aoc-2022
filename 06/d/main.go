@@ -9,17 +9,13 @@ import (
 func getFirstMarkerPosition(row []rune, size int) int {
 	count := 0
 	for i := 0; i < len(row); i++ {
-		duplicateFound := false
 		for j := i + 1; j < i+size-count; j++ {
 			if row[i] == row[j] {
-				duplicateFound = true
-				count = 0
+				count = -1
 				break
 			}
 		}
-		if !duplicateFound {
-			count++
-		}
+		count++
 		if count == size {
 			return i + 1
 		}

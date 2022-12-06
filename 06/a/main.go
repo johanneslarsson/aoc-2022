@@ -7,7 +7,7 @@ import (
 )
 
 func getPartOne(row []rune) int {
-	for i := 0; i < len(row)-3; i++ {
+	for i := 0; i < len(row)-4; i++ {
 		r0 := row[i]
 		r1 := row[i+1]
 		r2 := row[i+2]
@@ -22,7 +22,7 @@ func getPartOne(row []rune) int {
 }
 
 func getPartTwo(row []rune) int {
-	for i := 0; i < len(row)-13; i++ {
+	for i := 0; i < len(row)-4; i++ {
 		r0 := row[i]
 		r1 := row[i+1]
 		r2 := row[i+2]

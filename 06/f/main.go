@@ -7,19 +7,16 @@ import (
 )
 
 func getFirstMarkerPosition(row []rune, size int) int {
-	set := make(map[int32]bool, size)
 	for i := 0; i < len(row)-size; i++ {
+		seenChars := 0
 		for j := 0; j < i+size; j++ {
-			if _, ok := set[row[i+j]]; ok {
-				for key := range set {
-					delete(set, key)
-				}
+			charMask := 1 << (row[i+j] - 'a')
+			if seenChars&charMask != 0 {
 				break
-			} else {
-				set[row[i+j]] = true
 			}
+			seenChars |= charMask
 			if j == size-1 {
-				return i + size
+				return i + 1
 			}
 		}
 	}

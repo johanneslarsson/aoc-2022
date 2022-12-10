@@ -27,14 +27,15 @@ func parseXReg(instructions []Instruction) []int {
 
 func getPartOne(instructions []Instruction) int {
 	xReg := parseXReg(instructions)
-	res := 0
-	for i := range xReg {
-		j := i + 1
-		if j == 20 || j == 60 || j == 100 || j == 140 || j == 180 || j == 220 {
-			res += j * xReg[i]
-		}
+	result := 0
+	if len(xReg) < 220 {
+		return 0
 	}
-	return res
+	indexes := []int{20, 60, 100, 140, 180, 220}
+	for _, index := range indexes {
+		result += index * xReg[index-1]
+	}
+	return result
 }
 
 func getPartTwo(instructions []Instruction) int {

@@ -13,13 +13,19 @@ type Instruction struct {
 }
 
 func parseXReg(instructions []Instruction) []int {
-	xReg := make([]int, 0)
-	xReg = append(xReg, 1)
+	xReg := make([]int, 240)
+	index := 0
+	xReg[index] = 1
 	for _, inst := range instructions {
-		last := xReg[len(xReg)-1]
-		xReg = append(xReg, last)
+		xReg[index+1] = xReg[index]
 		if inst.Operation == "addx" {
-			xReg = append(xReg, last+inst.Counter)
+			addValue := xReg[index] + inst.Counter
+			xReg[index+2] = addValue
+			index++
+		}
+		index++
+		if index+2 >= 240 {
+			break
 		}
 	}
 	return xReg

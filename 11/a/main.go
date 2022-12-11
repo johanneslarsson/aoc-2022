@@ -39,9 +39,9 @@ func calcTopTwoMonkeyInspections(monkeys []Monkey, rounds int, reduceFactor int)
 				} else {
 					monkeys[m.TestFalseMonkey].StartItems = append(monkeys[m.TestFalseMonkey].StartItems, worryLevel)
 				}
-				monkeys[i].StartItems = monkeys[i].StartItems[1:]
 				monkeys[i].InspectCount++
 			}
+			monkeys[i].StartItems = monkeys[i].StartItems[:0]
 		}
 	}
 
